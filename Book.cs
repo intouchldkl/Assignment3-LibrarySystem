@@ -8,8 +8,10 @@ namespace Assignment3_LibrarySystem
     {
         private string title;
         private string author;
+        private string coauthor;
         private int pages;
         private bool borrowed;
+        private DateTime dueDate;
 
         private static int NumberOfBooks = 0;
         public Book(string title, string author, int pages)
@@ -21,6 +23,25 @@ namespace Assignment3_LibrarySystem
 
             NumberOfBooks = NumberOfBooks + 1;
         }
+        public Book(string title,int pages)
+        {
+            this.title = title;
+            this.pages = pages;
+            this.borrowed = false;
+
+            NumberOfBooks = NumberOfBooks + 1;
+        }
+        public Book(string title, string author, string coauthor, int pages)
+        {
+            this.title = title;
+            this.author = author;
+            this.coauthor = coauthor;
+            this.pages = pages;
+            this.borrowed = false;
+
+            NumberOfBooks = NumberOfBooks + 1;
+        }
+
         public static int GetNumberOfBooks()
         {
             return NumberOfBooks;
@@ -33,6 +54,11 @@ namespace Assignment3_LibrarySystem
         {
             return author;
 
+        }
+        public string GetBothAuthor()
+        {
+            return author + " " + coauthor;
+            
         }
         public int GetPages()
         {
@@ -48,11 +74,16 @@ namespace Assignment3_LibrarySystem
             if(borrowed == false)
             {
                 borrowed = true;
+                dueDate = DateTime.Now.AddDays(7);
             }
             else
             {
                 Console.WriteLine(title + " is not available");
             }
+        }
+        public DateTime getDueDate()
+        {
+            return dueDate;
         }
         public void ReturnBook()
         {
@@ -66,6 +97,20 @@ namespace Assignment3_LibrarySystem
             }
 
         }
+        public bool IsOverDue()
+        {
+            DateTime today = DateTime.Now;
+            int overdue = DateTime.Compare(today, dueDate);
+            if(overdue == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
+
 
 }
